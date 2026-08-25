@@ -1,0 +1,225 @@
+{
+  "name": "Customer_Voice_Analytics",
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "tables": [
+      {
+        "name": "feedback",
+        "columns": [
+          {
+            "name": "response_id",
+            "dataType": "string",
+            "sourceColumn": "response_id"
+          },
+          {
+            "name": "customer_id",
+            "dataType": "string",
+            "sourceColumn": "customer_id"
+          },
+          {
+            "name": "survey_date",
+            "dataType": "dateTime",
+            "sourceColumn": "survey_date",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "region",
+            "dataType": "string",
+            "sourceColumn": "region"
+          },
+          {
+            "name": "customer_segment",
+            "dataType": "string",
+            "sourceColumn": "customer_segment"
+          },
+          {
+            "name": "industry",
+            "dataType": "string",
+            "sourceColumn": "industry"
+          },
+          {
+            "name": "response_channel",
+            "dataType": "string",
+            "sourceColumn": "response_channel"
+          },
+          {
+            "name": "service_category",
+            "dataType": "string",
+            "sourceColumn": "service_category"
+          },
+          {
+            "name": "nps_score",
+            "dataType": "int64",
+            "sourceColumn": "nps_score"
+          },
+          {
+            "name": "csat_score",
+            "dataType": "int64",
+            "sourceColumn": "csat_score"
+          },
+          {
+            "name": "resolution_days",
+            "dataType": "int64",
+            "sourceColumn": "resolution_days"
+          },
+          {
+            "name": "issue_resolved",
+            "dataType": "string",
+            "sourceColumn": "issue_resolved"
+          },
+          {
+            "name": "feedback_text",
+            "dataType": "string",
+            "sourceColumn": "feedback_text"
+          },
+          {
+            "name": "nps_category",
+            "dataType": "string",
+            "type": "calculated",
+            "expression": "IF(feedback[nps_score] >= 9, \"Promoter\", IF(feedback[nps_score] >= 7, \"Passive\", \"Detractor\"))"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "feedback-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Json.Document(Web.Contents(\"http://127.0.0.1:8000/api/feedback\")),",
+                "    #\"Converted to Table\" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+                "    #\"Expanded Column1\" = Table.ExpandRecordColumn(#\"Converted to Table\", \"Column1\", {\"response_id\", \"customer_id\", \"survey_date\", \"region\", \"customer_segment\", \"industry\", \"response_channel\", \"service_category\", \"nps_score\", \"csat_score\", \"resolution_days\", \"issue_resolved\", \"feedback_text\"}),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Column1\",{{\"response_id\", type text}, {\"customer_id\", type text}, {\"survey_date\", type date}, {\"region\", type text}, {\"customer_segment\", type text}, {\"industry\", type text}, {\"response_channel\", type text}, {\"service_category\", type text}, {\"nps_score\", Int64.Type}, {\"csat_score\", Int64.Type}, {\"resolution_days\", Int64.Type}, {\"issue_resolved\", type text}, {\"feedback_text\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Responses",
+            "expression": "COUNTROWS(feedback)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Promoters",
+            "expression": "CALCULATE(COUNTROWS(feedback), feedback[nps_score] >= 9)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Passives",
+            "expression": "CALCULATE(COUNTROWS(feedback), feedback[nps_score] = 7 || feedback[nps_score] = 8)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Detractors",
+            "expression": "CALCULATE(COUNTROWS(feedback), feedback[nps_score] <= 6)",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Promoter %",
+            "expression": "DIVIDE([Promoters], [Total Responses], 0)",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Detractor %",
+            "expression": "DIVIDE([Detractors], [Total Responses], 0)",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "NPS",
+            "expression": "([Promoter %] - [Detractor %]) * 100",
+            "formatString": "+0.0;-0.0;0.0"
+          },
+          {
+            "name": "Average CSAT",
+            "expression": "AVERAGE(feedback[csat_score])",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Average Resolution Days",
+            "expression": "AVERAGE(feedback[resolution_days])",
+            "formatString": "0.00"
+          }
+        ]
+      },
+      {
+        "name": "Dim_Date",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "isKey": true,
+            "sourceColumn": "Date",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "Year"
+          },
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter"
+          },
+          {
+            "name": "MonthNo",
+            "dataType": "int64",
+            "sourceColumn": "MonthNo"
+          },
+          {
+            "name": "MonthName",
+            "dataType": "string",
+            "sourceColumn": "MonthName"
+          },
+          {
+            "name": "YearMonth",
+            "dataType": "string",
+            "sourceColumn": "YearMonth"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Dim_Date-Partition",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": [
+                "VAR MinDate = MIN(feedback[survey_date])",
+                "VAR MaxDate = MAX(feedback[survey_date])",
+                "RETURN",
+                "ADDCOLUMNS(",
+                "    CALENDAR(MinDate, MaxDate),",
+                "    \"Year\", YEAR([Date]),",
+                "    \"Quarter\", \"Q\" & FORMAT([Date], \"Q\"),",
+                "    \"MonthNo\", MONTH([Date]),",
+                "    \"MonthName\", FORMAT([Date], \"MMM\"),",
+                "    \"YearMonth\", FORMAT([Date], \"YYYY-MM\")",
+                ")"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "Rel_Date_Feedback",
+        "fromTable": "feedback",
+        "fromColumn": "survey_date",
+        "toTable": "Dim_Date",
+        "toColumn": "Date",
+        "crossFilteringBehavior": "oneDirection"
+      }
+    ]
+  }
+}

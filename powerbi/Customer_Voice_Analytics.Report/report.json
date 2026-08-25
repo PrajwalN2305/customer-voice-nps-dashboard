@@ -1,0 +1,151 @@
+{
+  "config": "{\"version\": \"5.50\", \"themeCollection\": {\"baseTheme\": {\"name\": \"CY24SU06\", \"version\": \"5.50\", \"type\": 2}}, \"activeSectionName\": \"CustomerExperienceOverview\"}",
+  "sections": [
+    {
+      "name": "CustomerExperienceOverview",
+      "displayName": "Customer Experience Overview",
+      "filters": "[]",
+      "height": 720,
+      "width": 1280,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 0,
+          "width": 1240,
+          "height": 60,
+          "config": "{\"name\": \"HeaderBanner\", \"title\": \"Customer Voice & NPS Analytics\"}"
+        },
+        {
+          "x": 20,
+          "y": 90,
+          "z": 1,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\": \"Card_TotalResponses\", \"title\": \"Total Responses\", \"measure\": \"[Total Responses]\"}"
+        },
+        {
+          "x": 330,
+          "y": 90,
+          "z": 2,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\": \"Card_NPS\", \"title\": \"Net NPS\", \"measure\": \"[NPS]\"}"
+        },
+        {
+          "x": 640,
+          "y": 90,
+          "z": 3,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\": \"Card_CSAT\", \"title\": \"Average CSAT\", \"measure\": \"[Average CSAT]\"}"
+        },
+        {
+          "x": 950,
+          "y": 90,
+          "z": 4,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\": \"Card_PromoterShare\", \"title\": \"Promoter Share\", \"measure\": \"[Promoter %]\"}"
+        },
+        {
+          "x": 20,
+          "y": 200,
+          "z": 5,
+          "width": 600,
+          "height": 240,
+          "config": "{\"name\": \"Line_MonthlyNPSTrend\", \"title\": \"Monthly NPS Trend\"}"
+        },
+        {
+          "x": 640,
+          "y": 200,
+          "z": 6,
+          "width": 600,
+          "height": 240,
+          "config": "{\"name\": \"Bar_NPSByRegion\", \"title\": \"NPS by Region\"}"
+        },
+        {
+          "x": 20,
+          "y": 450,
+          "z": 7,
+          "width": 390,
+          "height": 240,
+          "config": "{\"name\": \"Donut_NPSCategoryDistribution\", \"title\": \"NPS Category Distribution (Promoters vs Passives vs Detractors)\"}"
+        },
+        {
+          "x": 430,
+          "y": 450,
+          "z": 8,
+          "width": 500,
+          "height": 240,
+          "config": "{\"name\": \"Bar_CSATBySegment\", \"title\": \"Average CSAT by Customer Segment\"}"
+        },
+        {
+          "x": 950,
+          "y": 450,
+          "z": 9,
+          "width": 290,
+          "height": 240,
+          "config": "{\"name\": \"Bar_ChannelVolume\", \"title\": \"Response Volume by Channel\"}"
+        }
+      ]
+    },
+    {
+      "name": "VoiceOfCustomerAnalysis",
+      "displayName": "Voice of Customer Analysis",
+      "filters": "[]",
+      "height": 720,
+      "width": 1280,
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 20,
+          "z": 0,
+          "width": 1240,
+          "height": 60,
+          "config": "{\"name\": \"HeaderBanner2\", \"title\": \"Voice of Customer Analysis\"}"
+        },
+        {
+          "x": 20,
+          "y": 90,
+          "z": 1,
+          "width": 600,
+          "height": 200,
+          "config": "{\"name\": \"Bar_ServiceCategoryVolume\", \"title\": \"Response Distribution by Service Category\"}"
+        },
+        {
+          "x": 640,
+          "y": 90,
+          "z": 2,
+          "width": 600,
+          "height": 200,
+          "config": "{\"name\": \"Bar_NPSByServiceCategory\", \"title\": \"NPS by Service Category\"}"
+        },
+        {
+          "x": 20,
+          "y": 300,
+          "z": 3,
+          "width": 600,
+          "height": 200,
+          "config": "{\"name\": \"Bar_NPSBySegment2\", \"title\": \"NPS by Customer Segment\"}"
+        },
+        {
+          "x": 640,
+          "y": 300,
+          "z": 4,
+          "width": 600,
+          "height": 200,
+          "config": "{\"name\": \"Bar_ResolutionDaysByNPS\", \"title\": \"Average Resolution Days by NPS Category\"}"
+        },
+        {
+          "x": 20,
+          "y": 510,
+          "z": 5,
+          "width": 1220,
+          "height": 190,
+          "config": "{\"name\": \"Table_LowNPSFeedback\", \"title\": \"Low-NPS Customer Feedback Detail Table (NPS <= 6)\"}"
+        }
+      ]
+    }
+  ]
+}
