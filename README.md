@@ -27,8 +27,8 @@ An end-to-end customer experience analytics project analyzing synthetic customer
 
 - **Data Processing & Validation:** Python, Pandas, Matplotlib, Seaborn
 - **Database & Querying:** SQLite, SQL
-- **API Service:** FastAPI, Uvicorn
-- **Business Intelligence:** Power Query (M), Power BI, DAX
+- **API Service:** FastAPI
+- **Business Intelligence:**  Power BI, DAX
 
 ---
 
